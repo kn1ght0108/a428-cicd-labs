@@ -21,10 +21,15 @@ pipeline {
                 sh './jenkins/scripts/test.sh'
             }
         }
-        stage('Deliver') {
+        stage('Manual Approval'){
+            steps{
+                input message: 'Lanjutkan ke tahap Deploy? (klik "Proceed" untuk lanjut)'
+            }
+        }
+        stage('Deploy') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the website? (Click "Proceed" to continue)'
+                sleep 60
                 sh './jenkins/scripts/kill.sh'
             }
         }
